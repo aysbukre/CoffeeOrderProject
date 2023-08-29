@@ -48,37 +48,63 @@ class CoffeeShop {
         if (menu.containsKey(coffeeNumber)) {
             Coffee coffee = menu.get(coffeeNumber);
             String[] ingredients = coffee.getIngredients();
-            System.out.println("Thank You ! " + coffee.getName() + " chosen.");
+            System.out.println("Thank You ! " + coffee.getName() + " has been selected.");
             System.out.println("---------------------------");
-            System.out.println(coffee.getName() + " is getting ready. This drink has:");
-
+            System.out.println(coffee.getName() + " is being prepared.");
+            System.out.println("---------------------------");
+            System.out.println(coffee.getName() + " contains:");
+            
             for (String ingredient : ingredients) {
                 System.out.println("- " + ingredient);
             }
             
         	
-            System.out.println("included.");
+            //System.out.println("included.");
             System.out.println("Enjoy your meal!");
             System.out.println("---------------------------");
+            
+            
         } else {
             System.out.println("Invalid coffee number.");
         }
+    }
+    public void startOrderProcess() {
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Do you want to order coffee? (y/n)");
+            String response = scanner.next();
+
+            if (response.equalsIgnoreCase("y")) {
+                System.out.println("Please choose a coffee number:");
+                System.out.println("---------------------------");
+                displayMenu();
+                int coffeeNumber = scanner.nextInt();
+
+                if (menu.containsKey(coffeeNumber)) {
+                    orderCoffee(coffeeNumber);
+                } else {
+                    System.out.println("Invalid coffee number.");
+                }
+            } else if (response.equalsIgnoreCase("n")) {
+                System.out.println("Thank you for visiting our Coffee Shop!");
+                break;
+            } else {
+                System.out.println("Invalid response. Please enter 'y' or 'n'.");
+            }
+        }
+
+        scanner.close();
     }
 }
 
 public class CoffeeOrderApp {
     public static void main(String[] args) {
         CoffeeShop coffeeShop = new CoffeeShop();
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to our Coffee Shop");
         System.out.println("---------------------------");
-        System.out.println( "Please choose one of the following coffee numbers:");
-        coffeeShop.displayMenu();
 
-        int coffeeNumber = scanner.nextInt();
-        coffeeShop.orderCoffee(coffeeNumber);
-
-        scanner.close();
+        coffeeShop.startOrderProcess();
     }
 }
